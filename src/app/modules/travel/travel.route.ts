@@ -1,22 +1,16 @@
 import express from 'express';
+import validateRequest from '../../middlewares/validateRequest';
 import { TravelController } from './travel.controller';
+import { TravelValidation } from './travel.validation';
 const router = express.Router();
 
-router.get(
-  '/:id',
+router.get('/:id', TravelController.getSingleTravel);
 
-  TravelController.getSingleTravel
-);
-
-router.get(
-  '/',
-
-  TravelController.getAllTravels
-);
+router.get('/', TravelController.getAllTravels);
 
 router.post(
   '/create-travel',
-
+  validateRequest(TravelValidation.createTravelZodSchema),
   TravelController.createTravel
 );
 
